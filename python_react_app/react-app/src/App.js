@@ -1,18 +1,19 @@
 import logo from './logo.svg';
 import './App.css';
 import Hello from './components/Hello';
-import FunComponent from './components/FunComponent';
 import MyClass from './components/MyClass';
 
 function App() {
+  
+  function clicked() {
+    alert('class button is clicked')
+  }
+
+
   return (
     <div className="App">
-      <h1>
-        Hello React Application
-      </h1>
-      <Hello/>
-      <FunComponent/>
-      <MyClass/>
+      <Hello name="aish"/>
+      <MyClass email="axyerram@gmail.com" myclick={clicked}/>
     </div>
   );
 }

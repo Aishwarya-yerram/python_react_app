@@ -1,8 +1,16 @@
 import React from 'react'
 
-function Hello(){
+function Hello(props){
+
+	function ButtonClick() {
+		alert('Button is clicked');
+	}
+
 	return (
-		<h1> We are inside function component</h1>
+		<div>
+			<h1>My name is :{props.name} </h1>
+			<button onClick={ButtonClick}> Button </button>
+		</div>
 	)
 }
 
