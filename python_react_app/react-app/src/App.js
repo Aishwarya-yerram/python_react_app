@@ -11,7 +11,7 @@ function App() {
 
 
   return (
-    <div className="App">
+    <div className="container">
       <Hello name="aish"/>
       <MyClass email="axyerram@gmail.com" myclick={clicked}/>
     </div>

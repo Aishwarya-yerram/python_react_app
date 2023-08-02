@@ -9,7 +9,7 @@ function Hello(props){
 	return (
 		<div>
 			<h1>My name is :{props.name} </h1>
-			<button onClick={ButtonClick}> Button </button>
+			<button className="btn btn-success" onClick={ButtonClick}> Button </button>
 		</div>
 	)
 }
