@@ -1,9 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
-// import Name from './components/Name';
-// import Example from './components/Example';
-// import Form from './components/Form';
 import {useState, useEffect} from 'react';
+import ArticleList from './components/ArticleList';
 
 function App() {
   
@@ -31,13 +29,7 @@ function App() {
     <div className="App">
       <h1>Django React app </h1>
       <h2> Articles list </h2>
-      {articles.map(article =>{
-        return (
-          <div>
-            <h2 key={article.id}>{article.title}</h2>
-            <p> {article.description} </p>
-          </div>)
-      })}
+      <ArticleList articles = {articles}/>
     </div>
   );
 }
