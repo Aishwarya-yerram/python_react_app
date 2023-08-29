@@ -11,26 +11,27 @@ function App() {
   
   const [articles, setArticles] = useState([])
   const [editArticle, setEditArticle] = useState(null)
-  const [token, removeToken] = useCookies(['mytoken'])
+  const [token, setToken, removeToken] = useCookies(['mytoken'])
   let navigate = useNavigate()
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/articles/', {
-      'method': 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Token ${token['mytoken']}`
-      }
-    })
-    .then(resp => resp.json())
-    .then(resp => setArticles(resp))
-    .catch(error => console.log(error))
-  }, [])
+    if(token['mytoken']) {
+      fetch('http://127.0.0.1:8000/api/articles/', {
+        'method': 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Token ${token['mytoken']}`
+        }
+      })
+      .then(resp => resp.json())
+      .then(resp => setArticles(resp))
+    }
+  }, [token])
   
 
   useEffect(() => {
-    if(token['mytoken']) {
-      navigate('/auth');
+    if(!token['mytoken']) {
+      navigate('/');
     }
   }, [token])
 
