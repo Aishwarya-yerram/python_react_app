@@ -2,10 +2,11 @@
   background-color: #282c34;
   min-height: 100vh;
   color: white;
+  padding: 50px;
 }
 
 h1 {
-  text-align: center;
+  text-align: inherit;
 }
 
 .App-link {

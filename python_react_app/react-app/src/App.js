@@ -3,19 +3,23 @@ import './App.css';
 import {useState, useEffect} from 'react';
 import ArticleList from './components/ArticleList';
 import Form from './components/Form';
-import APIService from './APIService'
+import APIService from './APIService';
+import {useCookies} from 'react-cookie';
+import {useNavigate} from 'react-router-dom';
 
 function App() {
   
   const [articles, setArticles] = useState([])
   const [editArticle, setEditArticle] = useState(null)
+  const [token, removeToken] = useCookies(['mytoken'])
+  let navigate = useNavigate()
 
   useEffect(() => {
     fetch('http://127.0.0.1:8000/api/articles/', {
       'method': 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Token 9ea43624a5a7a47f068cd29d3ae000271efac67d' 
+        'Authorization': `Token ${token['mytoken']}`
       }
     })
     .then(resp => resp.json())
@@ -23,9 +27,13 @@ function App() {
     .catch(error => console.log(error))
   }, [])
   
-  function clicked() {
-    alert('class button is clicked')
-  }
+
+  useEffect(() => {
+    if(token['mytoken']) {
+      navigate('/auth');
+    }
+  }, [token])
+
 
   const updatedInformation = (article) =>{
     const new_article = articles.map(myarticle =>{
@@ -63,12 +71,18 @@ function App() {
     setEditArticle({})
   }
 
+  const logoutBtn = () => {
+    removeToken(['mytoken'])
+
+  }
+
   return (
     <div className="App">
       <h1>Django React app </h1>
       <br />
       <h2> Articles list </h2>
       <button className='btn btn-success' onClick={insertArticle}>Insert Article</button>
+      <button className='btn btn-primary' onClick={logoutBtn}>Logout</button>
       <ArticleList articles = {articles} editArticleValue = {editArticleValue} 
                    deleteArticleValue={deleteArticleValue}/>
       {editArticle ? <Form article={editArticle} updatedInformation={updatedInformation} 

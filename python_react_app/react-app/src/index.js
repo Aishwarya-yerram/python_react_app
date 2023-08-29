@@ -5,16 +5,19 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Route, Routes, BrowserRouter} from 'react-router-dom';
-import Login from './components/Login'
+import Login from './components/Login';
+import {CookiesProvider} from 'react-cookie';
 
 function Router(){
   return(
+    <CookiesProvider>
     <BrowserRouter>
       <Routes>
-        <Route extact path='/' element={<Login />}/ >
+        <Route extact path='/auth' element={<Login />}/ >
         <Route extact path='/articles' element={<App />}/ >
       </Routes>
     </BrowserRouter>
+    </CookiesProvider>
   )
 }
 
