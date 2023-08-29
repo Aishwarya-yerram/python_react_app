@@ -1,41 +1,50 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
+import APIService from '../APIService';
+import {useCookies} from 'react-cookie';
 
-class Form extends React.Component {
-	constructor(props) {
-		super(props)
+function Form(props) {
+	const [title, setTitle] = useState('')
+	const [description, setDescription] = useState('')
+	const [token] = useCookies(['mytoken'])
+
+	useEffect(() => {
+		setTitle(props.article.title)
+		setDescription(props.article.description)
+	}, [props.article])
 	
-		this.state = {
-			 username: '',
-			 password: ''
-		}
+	const updateArticle = () => {
+		APIService.UpdateArticle(props.article.id, {title, description}, token['mytoken'])
+		.then(resp => props.updatedInformation(resp))
 	}
 
-	usernameHandler = (event) => {
-		this.setState({
-			username:event.target.value
-		})
+	const insertArticle = () => {
+		APIService.InsertArticle({title, description}, token['mytoken'])
+		.then(resp => props.insertedInformation(resp))
 	}
 
-	passwordHandler = (event) => {
-		this.setState({
-			password:event.target.value
-		})
-
-	}
-
-	render() {
-		return (
-			<div className="container">
-				<input type="text" value={this.state.username}
-					   placeholder="Enter name" className="form-control" 
-					   onChange={this.usernameHandler}/>
-				<input type="password" value={this.state.password} 
-					   placeholder="Enter password" className="form-control" 
-					   onChange={this.passwordHandler}/>
-				<button className='btn btn-primary'> Submit</button>
-			</div>
-		)
-	}
+	return (
+		<div>
+			<h2> Form </h2>
+			{props.article ? (
+				<div className='mb-3'>
+					<label htmlFor='title' className='form-label'>Title</label>
+					<input type='text' className='form-control' id='title'
+						   placeholder='enter title' value={title}
+						   onChange = {e => setTitle(e.target.value)} />
+					<label htmlFor='description' className='form-label'>Title</label>
+					<textarea className='form-control' id='description' 
+						      placeholder='enter description' value={description}
+						      onChange = {e => setDescription(e.target.value)} />
+					<br/>
+					{
+						props.article.id ? <button onClick = {updateArticle} className='btn btn-success'>Update Article</button> 
+						: <button onClick = {insertArticle} className='btn btn-success'>Insert Article</button>
+					}
+					
+				</div>
+			) : null}
+		</div>
+	)
 }
 
-export default Form
+export default Form;
