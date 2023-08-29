@@ -13,7 +13,7 @@ function Router(){
     <CookiesProvider>
     <BrowserRouter>
       <Routes>
-        <Route extact path='/auth' element={<Login />}/ >
+        <Route extact path='/' element={<Login />}/ >
         <Route extact path='/articles' element={<App />}/ >
       </Routes>
     </BrowserRouter>
